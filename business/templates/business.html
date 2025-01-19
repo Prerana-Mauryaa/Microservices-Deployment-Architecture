@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar"></div>
+    
+    <!-- Second Bar with Logo, Home, and Icon -->
+    <div class="second-bar">
+        <img src="{{url_for('static',filename='assets/logo.png')}}" alt="Website Logo" class="logo">
+        <a href="/" class="home-link">Home</a>
+        <img src="{{url_for('static',filename='assets/rightlogo.png')}}" alt="Icon" class="icon">
+    </div>
+    <!-- Main Content -->
+      <!-- Flash Message Section -->
+    {% if success_message %}
+    <div class="flash success">
+        {{ success_message }}
+    </div>
+    {% elif error_message %}
+        <div class="flash error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    <main id="main-content" class="form-container" role="main">
+        <div id="form-status" class="align-left">
+            <h1 class="form-title">Sell Your Product</h1>
+            <form action="#" method="post" enctype="multipart/form-data" novalidate>
+
+                <!-- Personal Information Section in One Row -->
+                <section class="form-section" aria-labelledby="personal-section">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-control"
+                                aria-required="true"
+                                required>
+                        </div>
+                        <div class="col">
+                            <label for="contact-number" class="form-label">Email ID </label>
+                            <input 
+                                type="tel" 
+                                id="contact-number" 
+                                name="contact-number" 
+                                class="form-control"
+                                aria-required="true"
+                                pattern="[0-9]+"
+                                required>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Product Information Section in One Row -->
+                <section class="form-section" aria-labelledby="product-section">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="product-name" class="form-label">Product Name</label>
+                            <input 
+                                type="text" 
+                                id="product-name" 
+                                name="product-name" 
+                                class="form-control"
+                                aria-required="true"
+                                required>
+                        </div>
+                        <div class="col">
+                            <label for="categories" class="form-label">Categories</label>
+                            <input 
+                                type="text" 
+                                id="categories" 
+                                name="categories" 
+                                class="form-control"
+                                aria-required="true"
+                                required>
+                        </div>
+                    </div>
+                </section>
+                <section class="form-section" aria-labelledby="description-section">
+                    <div class="form-group">
+                        <label for="description" class="form-label">Product Description</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            class="form-control form-textarea"
+                            aria-required="true"
+                            aria-describedby="description-help"
+                            required></textarea>
+                        <span id="description-help" class="visually-hidden">Please provide a detailed description of the Product</span>
+                    </div>
+                </section>
+
+                <!-- Price & Currency Section in One Row -->
+                <section class="form-section" aria-labelledby="price-section">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="price" class="form-label">Set Price</label>
+                            <input 
+                                type="number" 
+                                id="price" 
+                                name="price" 
+                                class="form-control"
+                                min="0" 
+                                step="0.01"
+                                aria-required="true"
+                                required>
+                        </div>
+                        <div class="col">
+                            <label for="currency" class="form-label">Currency</label>
+                            <select 
+                                id="currency" 
+                                name="currency" 
+                                class="form-control"
+                                aria-required="true"
+                                required>
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="JPY">JPY</option>
+                                <option value="BGN">BGN</option>
+                                <option value="CZK">CZK</option>
+                                <option value="DKK">DKK</option>
+                                <option value="GBP">GBP</option>
+                                <option value="HUF">HUF</option>
+                                <option value="PLN">PLN</option>
+                                <option value="RON">RON</option>
+                                <option value="SEK">SEK</option>
+                                <option value="CHF">CHF</option>
+                                <option value="ISK">ISK</option>
+                                <option value="NOK">NOK</option>
+                                <option value="HRK">HRK</option>
+                                <option value="RUB">RUB</option>
+                                <option value="TRY">TRY</option>
+                                <option value="AUD">AUD</option>
+                                <option value="BRL">BRL</option>
+                                <option value="CAD">CAD</option>
+                                <option value="CNY">CNY</option>
+                                <option value="HKD">HKD</option>
+                                <option value="IDR">IDR</option>
+                                <option value="ILS">ILS</option>
+                                <option value="INR">INR</option>
+                                <option value="KRW">KRW</option>
+                                <option value="MXN">MXN</option>
+                                <option value="MYR">MYR</option>
+                                <option value="NZD">NZD</option>
+                                <option value="PHP">PHP</option>
+                                <option value="SGD">SGD</option>
+                                <option value="THB">THB</option>
+                                <option value="ZAR">ZAR</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upload Image Section -->
+                <section class="form-section" aria-labelledby="upload-section">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="picture" class="form-label">Upload Picture</label>
+                            <div class="file-upload">
+                                <input 
+                                    type="file" 
+                                    id="picture" 
+                                    name="picture" 
+                                    class="file-upload-input"
+                                    accept="image/*"
+                                    aria-required="true"
+                                    aria-describedby="file-help"
+                                    required>
+                                <div class="file-upload-label">
+                                    Choose a file or drag it here
+                                </div>
+                            </div>
+                            <span id="file-help" class="visually-hidden">Please upload an image file</span>
+                        </div>
+                    </div>
+                </section>
+
+                <button type="submit" class="submit-button">
+                    Submit Form
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Image Section -->
+    <div class="image-section">
+        <img src="{{url_for('static',filename='assets/rightimg.png')}}" alt="Product Image" class="product-image">
+    </div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+/* Ensure there is no margin or padding for body and html */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #853B5C;
+  width: 100%; /* Full width */
+  height: 31.8px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Second Bar */
+.second-bar {
+  background-color: #FFFFFF;
+  width: 100%; /* Full width */
+  height: 76.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* To center the content and prevent overflow */
+.container {
+  max-width: 1280px; /* Set the maximum width */
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+/* Logo and Icon */
+.logo {
+  width: 280px;
+  height: 59.1px;
+}
+
+.home-link {
+  font-size: 18px;
+  color: #853B5C;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 900px; /* Adjust this value as needed */
+}
+.icon {
+  width: 57.1px;
+  height: 69.3px;
+  margin-right: 50px;
+}
+
+/* Main Content */
+.form-container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 40px 20px;
+  background-color: #F4F4F4;
+  margin: 0; /* Remove any default margin */
+  box-sizing: border-box;
+  width: 100%; /* Ensure it spans the full width of the page */
+  height: 110vh; /* Ensure it takes the full height of the viewport */
+  overflow: hidden; /* Prevent any unwanted overflow */
+  flex-wrap: wrap; /* Make the form responsive */
+  align-items: flex-start;
+}
+
+/* Form Header */
+.form-header {
+  text-align: center;
+}
+
+.form-header h1 {
+  font-size: 32px;
+  color: #333333;
+  font-weight: 600;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Form Styling */
+.form-section {
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.form-group .col {
+  width: 48%;
+  margin-right: 10px; /* Add space between columns */
+}
+
+.form-group .col:last-child {
+  margin-right: 0; /* Remove margin from the last column */
+}
+
+
+.form-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a4a4a;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid rgba(133, 59, 92, 0.6); /* Transparent border */
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #853B5C;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(133, 59, 92, 0.25);
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background-color: #853B5C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #631f33;
+}
+
+/* File Upload Styling */
+.file-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border: 2px dashed rgba(133, 59, 92, 0.6);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.file-upload-label {
+  font-size: 14px;
+  color: #853B5C;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Image Section */
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.product-image {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+#form-status {
+  margin: auto;
+  margin-top: 20px;
+  color: #853B5C;
+  font-weight: bold;
+}
+.align-left {
+  width: 50%;
+  text-align: left;
+  margin-left: 10px;
+  padding-left: 10px;
+}

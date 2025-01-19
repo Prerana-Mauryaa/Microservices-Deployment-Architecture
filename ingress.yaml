@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: business-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-external   # Define the production service name here
+                port:
+                  number: 80         # Define the port for the production service here
+    - http:
+        paths:
+          - path: /qaPreprod
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-grpc-app  # Define the QA/Preprod service name here
+                port:
+                  number: 80                # Define the port for the QA/Preprod service here

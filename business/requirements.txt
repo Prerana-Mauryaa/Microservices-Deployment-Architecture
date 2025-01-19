@@ -1,0 +1,5 @@
+Flask==2.3.3
+grpcio==1.59.2
+grpcio-health-checking==1.59.2
+grpcio-status==1.59.2
+httplib2==0.22.0
