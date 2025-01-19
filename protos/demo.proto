@@ -198,6 +198,7 @@ message ChargeResponse {
 
 service EmailService {
     rpc SendOrderConfirmation(SendOrderConfirmationRequest) returns (Empty) {}
+    rpc SendVerificationEmail (SendVerificationRequest) returns (SendVerificationResponse){}
 }
 
 message OrderItem {
@@ -216,6 +217,20 @@ message OrderResult {
 message SendOrderConfirmationRequest {
     string email = 1;
     OrderResult order = 2;
+}
+
+//for new microservices
+// Define the request message for sending verification email
+message SendVerificationRequest {
+    string email = 1;
+    string product_name = 2;
+    float price = 4;
+}
+
+// Define the response message for the email service
+message SendVerificationResponse {
+    bool success = 1;
+    string message = 2;
 }
 
 
