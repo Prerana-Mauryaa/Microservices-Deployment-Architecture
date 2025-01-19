@@ -621,6 +621,11 @@ class EmailServiceStub(object):
                 request_serializer=demo__pb2.SendOrderConfirmationRequest.SerializeToString,
                 response_deserializer=demo__pb2.Empty.FromString,
                 )
+        self.SendVerificationEmail = channel.unary_unary(
+                '/hipstershop.EmailService/SendVerificationEmail',
+                request_serializer=demo__pb2.SendVerificationRequest.SerializeToString,
+                response_deserializer=demo__pb2.SendVerificationResponse.FromString,
+                )
 
 
 class EmailServiceServicer(object):
@@ -634,6 +639,12 @@ class EmailServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SendVerificationEmail(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_EmailServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -641,6 +652,11 @@ def add_EmailServiceServicer_to_server(servicer, server):
                     servicer.SendOrderConfirmation,
                     request_deserializer=demo__pb2.SendOrderConfirmationRequest.FromString,
                     response_serializer=demo__pb2.Empty.SerializeToString,
+            ),
+            'SendVerificationEmail': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendVerificationEmail,
+                    request_deserializer=demo__pb2.SendVerificationRequest.FromString,
+                    response_serializer=demo__pb2.SendVerificationResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -668,6 +684,23 @@ class EmailService(object):
         return grpc.experimental.unary_unary(request, target, '/hipstershop.EmailService/SendOrderConfirmation',
             demo__pb2.SendOrderConfirmationRequest.SerializeToString,
             demo__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SendVerificationEmail(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/hipstershop.EmailService/SendVerificationEmail',
+            demo__pb2.SendVerificationRequest.SerializeToString,
+            demo__pb2.SendVerificationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

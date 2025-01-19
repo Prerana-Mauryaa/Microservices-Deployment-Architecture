@@ -7,10 +7,6 @@ import os
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Needed for flashing messages
 
-@app.route('/')
-def home():
-    return "Welcome to the Business Frontend"
-
 @app.route('/business', methods=['POST', 'GET'])
 def submit_form():
     if request.method == 'GET':
@@ -27,7 +23,7 @@ def submit_form():
 
         # Initialize gRPC client and send the request
         try:
-            value = os.getenv('EMAIL_SERVICE','127.0.0.0:8080') 
+            value = os.getenv('EMAIL_SERVICE') 
             channel = grpc.insecure_channel(value)
             stub = demo_pb2_grpc.EmailServiceStub(channel)
 
@@ -52,4 +48,4 @@ def submit_form():
 
 # Start the Flask app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5055, debug=True)

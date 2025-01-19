@@ -26,7 +26,7 @@ COPY --from=builder /usr/local/lib/python3.12/ /usr/local/lib/python3.12/
 COPY . .
 
 # Expose the application port
-EXPOSE 5000
+EXPOSE 5055
 
 # Run the Flask application
 ENTRYPOINT ["python", "app.py"]
