@@ -5,7 +5,6 @@ import demo_pb2_grpc
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flashing messages
 
 @app.route('/business', methods=['POST', 'GET'])
 def submit_form():

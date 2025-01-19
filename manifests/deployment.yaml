@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: business-service
+  name: business
   labels:
-    app: flask-grpc-app
+    app: business
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-grpc-app
+      app: business
   template:
     metadata:
       labels:
-        app: flask-grpc-app
+        app: business
     spec:
       containers:
-      - name: flask-grpc-app
-        image: flask-grpc-app:latest
+      - name: business
+        image: preranamauryaa/microservice-businessservice:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 5055
         env:
         - name: EMAIL_SERVICE
-          value: "email-service.default.svc.cluster.local:8080" # Replace with the actual email service
+          value: "emailservice:5000" # Replace with the actual email service
         readinessProbe:
           httpGet:
             path: /
-            port: 5000
+            port: 5055
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /
-            port: 5000
+            port: 5055
           initialDelaySeconds: 15
           periodSeconds: 20

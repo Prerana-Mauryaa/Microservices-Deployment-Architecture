@@ -11,15 +11,15 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: frontend-external   # Define the production service name here
+                name: frontend-external 
                 port:
-                  number: 80         # Define the port for the production service here
+                  number: 80        
     - http:
         paths:
-          - path: /qaPreprod
+          - path: /business
             pathType: Prefix
             backend:
               service:
-                name: flask-grpc-app  # Define the QA/Preprod service name here
+                name: business-service  
                 port:
-                  number: 80                # Define the port for the QA/Preprod service here
+                  number: 80           
