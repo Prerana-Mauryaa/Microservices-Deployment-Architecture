@@ -10,7 +10,7 @@ spec:
   http:
   - match:
     - uri:
-        exact: /business
+        prefix: /business
     route:
     - destination:
         host: business-service.default.svc.cluster.local
