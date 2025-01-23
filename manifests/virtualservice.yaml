@@ -10,17 +10,17 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /
+        exact: /business
     route:
     - destination:
-        host: frontend-external
+        host: business-service.default.svc.cluster.local
         port:
           number: 80
   - match:
     - uri:
-        prefix: /business
+        prefix: /
     route:
     - destination:
-        host: business-service 
+        host: frontend-external.default.svc.cluster.local
         port:
           number: 80
