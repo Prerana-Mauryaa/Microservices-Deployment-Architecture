@@ -24,13 +24,13 @@ spec:
           value: "emailservice:5000" # Replace with the actual email service
         readinessProbe:
           httpGet:
-            path: /
+            path: /business
             port: 5055
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /
+            path: /business
             port: 5055
           initialDelaySeconds: 15
           periodSeconds: 20
