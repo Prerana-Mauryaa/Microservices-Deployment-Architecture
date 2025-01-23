@@ -4,7 +4,7 @@ import demo_pb2
 import demo_pb2_grpc
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/business/static')
 
 @app.route('/business', methods=['POST', 'GET'])
 def submit_form():
