@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name | default "cartservice" }}
+  namespace: {{ .Values.namespace | default "cartservice" }}
+  labels:
+    {{- include "cartservice.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.cartservice.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cartservice.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "cartservice.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.name | default "cartservice" }}
+      terminationGracePeriodSeconds: {{ .Values.cartservice.terminationGracePeriodSeconds }}
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: server
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+        image: "{{ .Values.cartservice.image.repository }}:{{ .Values.cartservice.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.cartservice.service.targetPort }}
+        env:
+        {{- range .Values.cartservice.env }}
+        - name: {{ .name }}
+          value: "{{ .value }}"
+        {{- end }}
+        readinessProbe:
+          initialDelaySeconds: {{ .Values.cartservice.readinessProbe.initialDelaySeconds }}
+          grpc:
+            port: {{ .Values.cartservice.readinessProbe.grpc.port }}
+        livenessProbe:
+          initialDelaySeconds: {{ .Values.cartservice.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.cartservice.livenessProbe.periodSeconds }}
+          grpc:
+            port: {{ .Values.cartservice.livenessProbe.grpc.port }}
+        resources:
+          requests:
+            cpu: {{ .Values.cartservice.resources.requests.cpu }}
+            memory: {{ .Values.cartservice.resources.requests.memory }}
+          limits:
+            cpu: {{ .Values.cartservice.resources.limits.cpu }}
+            memory: {{ .Values.cartservice.resources.limits.memory }}

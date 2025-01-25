@@ -1,0 +1,50 @@
+#global
+namespace: loadgenerator
+
+replicaCount: 1
+terminationGracePeriodSeconds: 5
+restartPolicy: Always
+
+# Image details
+image:
+  repository: preranamauryaa/microservice-loadgeneratorservice
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Init container settings
+initContainer:
+  image:
+    repository: busybox
+    tag: latest
+    pullPolicy: IfNotPresent
+  maxRetries: 12
+  retryInterval: 10
+  frontendAddress: "frontend:80"
+
+# Environment variables
+env:
+  FRONTEND_ADDR: "frontend:80"
+  USERS: "10"
+  RATE: "1"
+
+# Resource requests and limits
+resources:
+  requests:
+    cpu: 300m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Security context
+securityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  privileged: false
+  readOnlyRootFilesystem: true

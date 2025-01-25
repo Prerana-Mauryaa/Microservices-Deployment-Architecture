@@ -1,0 +1,48 @@
+# Default values for business-service
+#global
+name: business-service
+namespace: business-service
+
+replicaCount: 1
+
+image:
+  repository: preranamauryaa/microservice-businessservice
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 5055
+
+readinessProbe:
+  httpGet:
+    path: /business
+    port: 5055
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+livenessProbe:
+  httpGet:
+    path: /business
+    port: 5055
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+env:
+  - name: EMAIL_SERVICE
+    value: "emailservice:5000" # Replace with the actual email service
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+serviceAccount:
+  create: true
+  name: business-service
+
+terminationGracePeriodSeconds: 30

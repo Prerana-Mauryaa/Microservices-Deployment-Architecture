@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name | default "cartservice" }}
+  namespace: {{ .Values.namespace | default "cartservice" }}
+  labels:
+    {{- include "cartservice.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.cartservice.service.type }}
+  selector:
+    {{- include "cartservice.labels" . | nindent 6 }}
+  ports:
+  - name: grpc
+    port: {{ .Values.cartservice.service.port }}
+    targetPort: {{ .Values.cartservice.service.targetPort }}

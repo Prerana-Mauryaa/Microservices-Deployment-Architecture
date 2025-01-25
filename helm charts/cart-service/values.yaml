@@ -1,0 +1,63 @@
+# Default values for the Cart Service and Redis
+#global
+name: cartservice
+namespace: cartservice
+
+cartservice:
+  replicaCount: 1
+  image:
+    repository: preranamauryaa/microservice-cartservice
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 7070
+    targetPort: 7070
+  env:
+    - name: REDIS_ADDR
+      value: "redis-cart:6379"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 64Mi
+    limits:
+      cpu: 300m
+      memory: 128Mi
+  readinessProbe:
+    initialDelaySeconds: 15
+    grpc:
+      port: 7070
+  livenessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    grpc:
+      port: 7070
+  terminationGracePeriodSeconds: 5
+
+redis:
+  image:
+    repository: redis
+    tag: alpine
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 6379
+    targetPort: 6379
+  resources:
+    requests:
+      cpu: 70m
+      memory: 200Mi
+    limits:
+      cpu: 125m
+      memory: 256Mi
+  readinessProbe:
+    periodSeconds: 5
+    tcpSocket:
+      port: 6379
+  livenessProbe:
+    periodSeconds: 5
+    tcpSocket:
+      port: 6379
+  volume:
+    name: redis-data
+    mountPath: /data

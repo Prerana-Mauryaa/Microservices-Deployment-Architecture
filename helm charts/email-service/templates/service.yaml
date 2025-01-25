@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name | default "emailservice" }}
+  namespace: {{ .Values.namespace | default "emailservice" }}
+  labels:
+    {{- include "emailservice.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "emailservice.labels" . | nindent 6 }}
+  ports:
+  - name: grpc
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}

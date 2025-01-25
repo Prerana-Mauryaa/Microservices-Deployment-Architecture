@@ -1,0 +1,40 @@
+#global
+name: frontend
+namespace: frontend
+
+image:
+  repository: preranamauryaa/microservice-frontendservice
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+ports:
+  http: 80
+  targetPort: 8080
+
+probes:
+  readiness:
+    initialDelaySeconds: 10
+    path: "/_healthz"
+  liveness:
+    initialDelaySeconds: 10
+    path: "/_healthz"
+
+env:
+  PORT: 8080
+  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550
+  CURRENCY_SERVICE_ADDR: currencyservice:7000
+  CART_SERVICE_ADDR: cartservice:7070
+  RECOMMENDATION_SERVICE_ADDR: recommendationservice:8080
+  SHIPPING_SERVICE_ADDR: shippingservice:50051
+  CHECKOUT_SERVICE_ADDR: checkoutservice:5050
+  AD_SERVICE_ADDR: adservice:9555
+  SHOPPING_ASSISTANT_SERVICE_ADDR: shoppingassistantservice:80
+  ENABLE_PROFILER: "0"

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cart
+  namespace: {{ .Values.namespace | default "cartservice" }}
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "redis.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "redis.labels" . | nindent 8 }}
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: redis
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+        image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.redis.service.targetPort }}
+        readinessProbe:
+          periodSeconds: {{ .Values.redis.readinessProbe.periodSeconds }}
+          tcpSocket:
+            port: {{ .Values.redis.readinessProbe.tcpSocket.port }}
+        livenessProbe:
+          periodSeconds: {{ .Values.redis.livenessProbe.periodSeconds }}
+          tcpSocket:
+            port: {{ .Values.redis.livenessProbe.tcpSocket.port }}
+        volumeMounts:
+        - mountPath: {{ .Values.redis.volume.mountPath }}
+          name: {{ .Values.redis.volume.name }}
+        resources:
+          requests:
+            cpu: {{ .Values.redis.resources.requests.cpu }}
+            memory: {{ .Values.redis.resources.requests.memory }}
+          limits:
+            cpu: {{ .Values.redis.resources.limits.cpu }}
+            memory: {{ .Values.redis.resources.limits.memory }}
+      volumes:
+      - name: {{ .Values.redis.volume.name }}
+        emptyDir: {}

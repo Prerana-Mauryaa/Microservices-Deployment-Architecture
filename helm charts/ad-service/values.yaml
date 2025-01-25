@@ -1,0 +1,30 @@
+# Default values for adservice
+# global
+name: adservice
+namespace: adservice
+
+replicaCount: 1
+
+image:
+  repository: preranamauryaa/microservice-adservice
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 9555
+  targetPort: 9555
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 180Mi
+  limits:
+    cpu: 300m
+    memory: 300Mi
+
+terminationGracePeriodSeconds: 5
+
+env:
+  - name: PORT
+    value: "9555"

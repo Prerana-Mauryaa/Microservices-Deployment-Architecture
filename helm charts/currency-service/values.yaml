@@ -1,0 +1,32 @@
+# Default values for currencyservice
+#global
+name: currencyservice
+namespace: currencyservice
+
+replicaCount: 1
+
+image:
+  repository: preranamauryaa/microservice-currencyservice
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 7000
+  targetPort: 7000
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+terminationGracePeriodSeconds: 5
+
+env:
+  - name: PORT
+    value: "7000"
+  - name: DISABLE_PROFILER
+    value: "1"
