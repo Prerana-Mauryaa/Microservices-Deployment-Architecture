@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  labels:
+    app: {{ .Values.deployment.labels.app }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.labels.app }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        fsGroup: {{ .Values.deployment.securityContext.fsGroup }}
+        runAsGroup: {{ .Values.deployment.securityContext.runAsGroup }}
+        runAsNonRoot: {{ .Values.deployment.securityContext.runAsNonRoot }}
+        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}
+      containers:
+        - name: {{ .Values.deployment.container.name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.deployment.container.imagePullPolicy }}
+          ports:
+          - containerPort: {{ .Values.deployment.container.port }}
+          env:
+          - name: PORT
+            value: "{{ .Values.deployment.container.port }}"
+          - name: DISABLE_PROFILER
+            value: "1"
+          readinessProbe:
+            grpc:
+              port: {{ .Values.deployment.readinessProbe.grpc.port }}
+          livenessProbe:
+            grpc:
+              port: {{ .Values.deployment.livenessProbe.grpc.port }}
+          resources:
+            requests:
+              cpu: {{ .Values.deployment.container.resources.requests.cpu }}
+              memory: {{ .Values.deployment.container.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.deployment.container.resources.limits.cpu }}
+              memory: {{ .Values.deployment.container.resources.limits.memory }}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.externalService.name }}
+  labels:
+    app: {{ .Values.externalService.labels.app }}
+spec:
+  type: {{ .Values.externalService.type }}
+  selector:
+    app: {{ .Values.externalService.labels.app }}
+  ports:
+  - name: http
+    port: {{ .Values.externalService.port }}
+    targetPort: {{ .Values.externalService.targetPort }}
