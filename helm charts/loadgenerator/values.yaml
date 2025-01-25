@@ -19,11 +19,11 @@ initContainer:
     pullPolicy: IfNotPresent
   maxRetries: 12
   retryInterval: 10
-  frontendAddress: "frontend:80"
+  frontendAddress: "frontend.frontend.svc.cluster.local:80"
 
 # Environment variables
 env:
-  FRONTEND_ADDR: "frontend:80"
+  FRONTEND_ADDR: "frontend.frontend.svc.cluster.local:80"
   USERS: "10"
   RATE: "1"
 

@@ -31,7 +31,7 @@ livenessProbe:
 
 env:
   - name: EMAIL_SERVICE
-    value: "emailservice:5000" # Replace with the actual email service
+    value: "emailservice.emailservice.svc.cluster.local:5000" 
 
 resources:
   requests:
