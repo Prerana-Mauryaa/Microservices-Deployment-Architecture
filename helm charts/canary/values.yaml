@@ -4,8 +4,7 @@ defaults:
   namespace: "frontend" # will be changed dynamically while deploying
 
 virtualService:
-  name: "frontend-virtualservice" # will be changed dynamically while deploying
-  namespace: "frontend" # will be changed dynamically while deploying
+  name: "virtualservice"
 destinationRule:
   name: "backend-destinationrule" 
 trafficWeights:
