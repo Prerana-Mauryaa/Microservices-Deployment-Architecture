@@ -1,0 +1,73 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'TAG', defaultValue: 'v1', description: 'Docker image tag version')
+        booleanParam(name: 'CANARY', defaultValue: false, description: 'Is this a canary deployment?')
+    }
+
+    environment {
+        IMAGE_NAME = "your-repo/microservice-name:${TAG}"
+        HELM_RELEASE_NAME = "microservice-name"
+        CHART_PATH = "./helm/microservice-name"
+        STABLE_VALUES_FILE = "stable-values.yaml"
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "Building Docker Image with tag: ${TAG}"
+                    sh """
+                    docker build -t ${env.IMAGE_NAME} .
+                    """
+                }
+            }
+        }
+
+        stage('Tag and Push Docker Image') {
+            steps {
+                script {
+                    echo "Tagging and Pushing Docker Image: ${env.IMAGE_NAME}"
+                    sh """
+                    docker push ${env.IMAGE_NAME}
+                    """
+                }
+            }
+        }
+
+        stage('Install or Upgrade Helm Release') {
+            steps {
+                script {
+                    if (params.CANARY) {
+                        echo "Installing canary version with replicas set to 0"
+                        sh """
+                        helm upgrade --install ${env.HELM_RELEASE_NAME}-canary \
+                        ${env.CHART_PATH} \
+                        --set image.tag=${TAG} \
+                        --set replicaCount=0 \
+                        --values ${env.STABLE_VALUES_FILE}
+                        """
+                    } else {
+                        echo "Installing stable release for the first time"
+                        sh """
+                        helm upgrade --install ${env.HELM_RELEASE_NAME} \
+                        ${env.CHART_PATH} \
+                        --set image.tag=${TAG} \
+                        --values ${env.STABLE_VALUES_FILE}
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment pipeline completed successfully."
+        }
+        failure {
+            echo "Deployment pipeline failed."
+        }
+    }
+}

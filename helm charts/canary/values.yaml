@@ -1,0 +1,18 @@
+# values.yaml
+defaults:
+  host: "frontend.frontend.svc.cluster.local" # will be changed dynamically while deploying
+  namespace: "frontend" # will be changed dynamically while deploying
+
+virtualService:
+  name: "frontend-virtualservice" # will be changed dynamically while deploying
+  namespace: "frontend" # will be changed dynamically while deploying
+destinationRule:
+  name: "backend-destinationrule" 
+trafficWeights:
+  stable: 100
+  canary: 0
+subsets:
+  stable:
+    canary: "false"
+  canary:
+    canary: "true"

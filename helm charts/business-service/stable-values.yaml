@@ -1,0 +1,51 @@
+# Default values for business-service
+#global
+#stable version
+name: business-service
+namespace: business-service
+labels:
+  canary: "false"
+
+replicaCount: 1
+
+image:
+  repository: preranamauryaa/microservice-businessservice
+  tag: latest #will be changed while deploying
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 5055
+
+readinessProbe:
+  httpGet:
+    path: /business
+    port: 5055
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+livenessProbe:
+  httpGet:
+    path: /business
+    port: 5055
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+env:
+  - name: EMAIL_SERVICE
+    value: "emailservice.emailservice.svc.cluster.local:5000" 
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+serviceAccount:
+  create: true
+  name: business-service
+
+terminationGracePeriodSeconds: 30
