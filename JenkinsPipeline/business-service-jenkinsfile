@@ -7,8 +7,8 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = 'docker.io/your-repo'
-        DOCKER_IMAGE_NAME = 'prer' //change later
-        REGISTRY_CREDENTIAL = '' //change later
+        DOCKER_IMAGE_NAME = 'preranamauryaa/microservice-businessservice' 
+        REGISTRY_CREDENTIAL = 'dockerhub' 
         HELM_CHART_NAME = 'business-service'
         NAMESPACE= 'business-service'
     }
@@ -30,7 +30,7 @@ pipeline {
                         [$class: 'CleanBeforeCheckout']
                     ],
                     userRemoteConfigs: [
-                        [credentialsId: '90f6337a-2974-483f-9adb-f0f9d46198b7', url: 'git@github.com:Prerana-Mauryaa/Deployment-of-Two-Tier-App.git']
+                        [credentialsId: 'a0935f93-5543-4c4f-b87f-abdcf96049f8', url: 'git@github.com:Prerana-Mauryaa/microservices-project.git']
                     ]
                 ]
             }
@@ -62,7 +62,7 @@ pipeline {
 
     post {
         always {
-            cleanWs() // Clean workspace after execution
+            cleanWs()
         }
     }
 }
