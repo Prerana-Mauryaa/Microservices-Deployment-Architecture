@@ -43,7 +43,7 @@ pipeline {
                         sh """
                             sonar-scanner \
                             -Dsonar.projectKey=business-service \
-                            -Dsonar.projectName='Business Service' \
+                            -Dsonar.projectName='business-service' \
                             -Dsonar.sources=./microservices/business/
                         """
                     }
