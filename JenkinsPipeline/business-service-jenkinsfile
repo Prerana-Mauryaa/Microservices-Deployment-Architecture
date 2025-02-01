@@ -11,7 +11,7 @@ pipeline {
         REGISTRY_CREDENTIAL = 'dockerhub' 
         HELM_CHART_NAME = 'business-service'
         NAMESPACE= 'business-service'
-        DOCKER_FILE_PATH = './microservices/business/Dockerfile'
+        DOCKERFILE_DIR = './microservices/business/'
     }
 
     stages {
@@ -41,12 +41,12 @@ pipeline {
             steps {
                 script {
                     echo 'Building and pushing the Docker image to Docker Hub'
-                    dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "-f ${DOCKER_FILE_PATH} .")
-                    
-                    // Push the image to Docker Hub
-                    docker.withRegistry('', REGISTRY_CREDENTIAL) {
-                        dockerImage.push()
-                    }
+                    dir(DOCKERFILE_DIR) {
+                        dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                        
+                        docker.withRegistry('', REGISTRY_CREDENTIAL) {
+                            dockerImage.push()
+                        }
                 }
             }
         }
