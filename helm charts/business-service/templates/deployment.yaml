@@ -5,18 +5,15 @@ metadata:
   namespace: {{ .Values.namespace | default "business-service" }}
   labels:
     {{- include "business-service.labels" . | nindent 4 }}
-    canary: {{ .Values.labels.canary }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "business-service.labels" . | nindent 6 }}
-      canary: {{ .Values.labels.canary }}
   template:
     metadata:
       labels:
         {{- include "business-service.labels" . | nindent 8 }}
-        canary: {{ .Values.labels.canary }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name | default "business-service" }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
