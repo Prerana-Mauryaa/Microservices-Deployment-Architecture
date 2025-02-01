@@ -2,72 +2,67 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'TAG', defaultValue: 'v1', description: 'Docker image tag version')
-        booleanParam(name: 'CANARY', defaultValue: false, description: 'Is this a canary deployment?')
+        string(name: 'DOCKER_IMAGE_TAG', defaultValue: 'latest', description: 'Tag for Docker image')
     }
 
     environment {
-        IMAGE_NAME = "your-repo/microservice-name:${TAG}"
-        HELM_RELEASE_NAME = "microservice-name"
-        CHART_PATH = "./helm/microservice-name"
-        STABLE_VALUES_FILE = "stable-values.yaml"
+        DOCKER_REGISTRY = 'docker.io/your-repo'
+        DOCKER_IMAGE_NAME = 'prer' //change later
+        REGISTRY_CREDENTIAL = '' //change later
+        HELM_CHART_NAME = 'business-service'
+        NAMESPACE= 'business-service'
     }
 
     stages {
-        stage('Build Docker Image') {
+        stage('Clean Workspace') {
             steps {
-                script {
-                    echo "Building Docker Image with tag: ${TAG}"
-                    sh """
-                    docker build -t ${env.IMAGE_NAME} .
-                    """
-                }
+                cleanWs()
             }
         }
 
-        stage('Tag and Push Docker Image') {
+        stage('Clone Repo') {
             steps {
-                script {
-                    echo "Tagging and Pushing Docker Image: ${env.IMAGE_NAME}"
-                    sh """
-                    docker push ${env.IMAGE_NAME}
-                    """
-                }
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']], 
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+                        [$class: 'CleanBeforeCheckout']
+                    ],
+                    userRemoteConfigs: [
+                        [credentialsId: '90f6337a-2974-483f-9adb-f0f9d46198b7', url: 'git@github.com:Prerana-Mauryaa/Deployment-of-Two-Tier-App.git']
+                    ]
+                ]
             }
         }
 
-        stage('Install or Upgrade Helm Release') {
+        stage('Build and Push Docker Image') {
             steps {
                 script {
-                    if (params.CANARY) {
-                        echo "Installing canary version with replicas set to 0"
-                        sh """
-                        helm upgrade --install ${env.HELM_RELEASE_NAME}-canary \
-                        ${env.CHART_PATH} \
-                        --set image.tag=${TAG} \
-                        --set replicaCount=0 \
-                        --values ${env.STABLE_VALUES_FILE}
-                        """
-                    } else {
-                        echo "Installing stable release for the first time"
-                        sh """
-                        helm upgrade --install ${env.HELM_RELEASE_NAME} \
-                        ${env.CHART_PATH} \
-                        --set image.tag=${TAG} \
-                        --values ${env.STABLE_VALUES_FILE}
-                        """
+                    echo 'Building and pushing the Docker image to Docker Hub'
+                    dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+                    docker.withRegistry('', REGISTRY_CREDENTIAL) {
+                        dockerImage.push()
                     }
+                }
+            }
+        }
+
+
+        stage('Install Helm Chart') {
+            steps {
+                script {
+                    sh "helm upgrade --install business-service  ./helm-charts/${HELM_CHART_NAME} \
+                        --namespace ${NAMESPACE} \
+                        --set image.tag=${params.DOCKER_IMAGE_TAG}"
                 }
             }
         }
     }
 
     post {
-        success {
-            echo "Deployment pipeline completed successfully."
-        }
-        failure {
-            echo "Deployment pipeline failed."
+        always {
+            cleanWs() // Clean workspace after execution
         }
     }
 }

@@ -3,8 +3,6 @@
 #stable version
 name: business-service
 namespace: business-service
-labels:
-  canary: "false"
 
 replicaCount: 1
 
