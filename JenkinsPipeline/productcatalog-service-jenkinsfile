@@ -6,12 +6,12 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE_NAME = 'preranamauryaa/microservice-businessservice' 
+        DOCKER_IMAGE_NAME = 'preranamauryaa/microservice-productcatalogservice' 
         REGISTRY_CREDENTIAL = 'dockerhub' 
-        HELM_CHART_NAME = 'business-service'
-        NAMESPACE= 'business-service'
-        DOCKERFILE_DIR = './microservices/business/'
-        RELEASE_NAME=business-service
+        HELM_CHART_NAME = 'productcatalog-service'
+        NAMESPACE= 'productcatalogservice'
+        DOCKERFILE_DIR = './microservices/productcatalogservice/'
+        RELEASE_NAME = 'productcatalogservice'
     }
 
     stages {
@@ -54,7 +54,7 @@ pipeline {
         stage('Install Helm Chart') {
             steps {
                 script {
-                    sh "helm upgrade --install ${RELEASE_NAME}  ./helm-charts/${HELM_CHART_NAME} \
+                    sh "helm upgrade --install  ${RELEASE_NAME} ./helm-charts/${HELM_CHART_NAME} \
                         --namespace ${NAMESPACE} \
                         --set image.tag=${params.DOCKER_IMAGE_TAG}"
                 }

@@ -6,12 +6,12 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE_NAME = 'preranamauryaa/microservice-businessservice' 
+        DOCKER_IMAGE_NAME = 'preranamauryaa/microservice-adservice' 
         REGISTRY_CREDENTIAL = 'dockerhub' 
-        HELM_CHART_NAME = 'business-service'
-        NAMESPACE= 'business-service'
-        DOCKERFILE_DIR = './microservices/business/'
-        RELEASE_NAME=business-service
+        HELM_CHART_NAME = 'ad-service'
+        NAMESPACE= 'adservice'
+        DOCKERFILE_DIR = './microservices/adservice/'
+        RELEASE_NAME= 'adservice'
     }
 
     stages {
