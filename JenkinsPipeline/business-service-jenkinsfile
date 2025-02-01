@@ -11,7 +11,7 @@ pipeline {
         REGISTRY_CREDENTIAL = 'dockerhub' 
         HELM_CHART_NAME = 'business-service'
         NAMESPACE= 'business-service'
-        DOCKER_FILE_PATH = './microservices/business/'
+        DOCKER_FILE_PATH = './microservices/business/Dockerfile'
     }
 
     stages {
