@@ -30,7 +30,7 @@ pipeline {
                         [$class: 'CleanBeforeCheckout']
                     ],
                     userRemoteConfigs: [
-                        [git credentialsId: 'a0935f93-5543-4c4f-b87f-abdcf96049f8', url: 'git@github.com:Prerana-Mauryaa/microservices-project.git']
+                        [credentialsId: 'a0935f93-5543-4c4f-b87f-abdcf96049f8', url: 'git@github.com:Prerana-Mauryaa/microservices-project.git']
                     ]
                 ]
             }
