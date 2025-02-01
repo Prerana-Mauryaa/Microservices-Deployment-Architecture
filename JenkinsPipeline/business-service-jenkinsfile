@@ -36,7 +36,22 @@ pipeline {
                 ]
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'sonar-local') {
+                    script {
+                        sh """
+                            sonar-scanner \
+                            -Dsonar.projectKey=business-service \
+                            -Dsonar.projectName='Business Service' \
+                            -Dsonar.sources=./microservices/business/
+                        """
+                    }
+                }
+            }
+        }
 
+    
         stage('Build and Push Docker Image') {
             steps {
                 script {
