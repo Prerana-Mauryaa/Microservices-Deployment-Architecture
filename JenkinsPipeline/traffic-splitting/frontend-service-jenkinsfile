@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'STABLE_TRAFFIC_WEIGHT', defaultValue: '20', description: 'Traffic weight for stable version')
+        string(name: 'CANARY_TRAFFIC_WEIGHT', defaultValue: '80', description: 'Traffic weight for canary version')
+    }
+    environment {
+        CANARY_RELEASE_NAME="frontend-service-canary"
+        CANARY_HELM_PATH="./canary-helm-charts/canary"
+        NAMESPACE= 'frontend'
+        HOST="frontend.frontend.svc.cluster.local"
+    }
+
+    stages {
+        stage('Traffic Splitting') {
+            steps {
+                script {
+                    def stableTrafficWeight = params.STABLE_TRAFFIC_WEIGHT
+                    def canaryTrafficWeight = params.CANARY_TRAFFIC_WEIGHT
+
+                    echo "Stable traffic weight: ${stableTrafficWeight}%"
+                    echo "Canary traffic weight: ${canaryTrafficWeight}%"
+
+                    sh """
+                        helm upgrade --install ${CANARY_RELEASE_NAME} ${CANARY_HELM_PATH} --namespace ${NAMESPACE}  \
+                            --set defaults.host=${HOST} \
+                            --set defaults.namespace=${NAMESPACE} \
+                            --set trafficWeights.stable=${stableTrafficWeight} \
+                            --set trafficWeights.canary=${canaryTrafficWeight}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful with stable traffic weight: ${params.STABLE_TRAFFIC_WEIGHT} and canary traffic weight: ${params.CANARY_TRAFFIC_WEIGHT}."
+        }
+
+        failure {
+            echo "Deployment failed. Check logs for errors."
+        }
+    }
+}
