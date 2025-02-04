@@ -2,10 +2,20 @@
 name: frontend
 namespace: frontend
 
-image:
-  repository: preranamauryaa/microservice-frontendservice
-  tag: latest
-  pullPolicy: IfNotPresent
+stable:
+  labels:
+    canary: "false"
+  image:
+    repository: preranamauryaa/microservice-frontendservice
+    tag: v1 #will be changed while deploying
+    pullPolicy: IfNotPresent
+canary:
+  labels:
+    canary: "true"
+  image:
+    repository: preranamauryaa/microservice-frontendservice
+    tag: v1 #will be changed while deploying
+    pullPolicy: IfNotPresent
 
 resources:
   requests:

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: canary-routing
+description: Helm chart for managing Istio VirtualService and DestinationRule for Canary deployments
+version: 0.1.0
+type: application

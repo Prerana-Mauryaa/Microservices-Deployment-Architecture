@@ -1,15 +1,26 @@
 # Default values for business-service
 #global
-#stable version
+#canary version
 name: business-service
-namespace: business-service
+namespace: business-service 
 
-replicaCount: 1
+stable:
+  labels:
+    canary: "false"
+  replicaCount: 1
+  image:
+    repository: preranamauryaa/microservice-businessservice
+    tag: v5 #will be changed while deploying
+    pullPolicy: IfNotPresent
 
-image:
-  repository: preranamauryaa/microservice-businessservice
-  tag: latest #will be changed while deploying
-  pullPolicy: IfNotPresent
+canary:
+  labels:
+    canary: "true"
+  replicaCount: 0
+  image:
+    repository: preranamauryaa/microservice-businessservice
+    tag: v6 #will be changed while deploying
+    pullPolicy: IfNotPresent
 
 service:
   type: LoadBalancer

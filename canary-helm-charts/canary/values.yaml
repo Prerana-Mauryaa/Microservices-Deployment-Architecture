@@ -1,0 +1,17 @@
+# values.yaml
+defaults:
+  host: "//it will change dynamically" # will be changed dynamically while deploying
+  namespace: "business-service" # will be changed dynamically while deploying
+
+virtualService:
+  name: "virtualservice" 
+destinationRule:
+  name: "destinationrule" 
+trafficWeights:
+  stable: 100
+  canary: 0
+subsets:
+  stable:
+    canary: "false"
+  canary:
+    canary: "true"
