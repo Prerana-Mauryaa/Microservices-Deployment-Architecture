@@ -2,7 +2,10 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'DOCKER_IMAGE_TAG', defaultValue: 'latest', description: 'Tag for Docker image')
+        string(name: 'STABLE_DOCKER_IMAGE_TAG', defaultValue: 'latest', description: 'Tag for Docker image')
+        booleanParam(name: 'canaryEnabled', defaultValue: false, description: 'Enable Canary Deployment')
+        string(name: 'CANARY_DOCKER_IMAGE_TAG', defaultValue: '', description: 'Tag for Canary Docker image (only required if canaryEnabled is true)')
+        booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback to previous Helm release revision')
     }
 
     environment {
@@ -11,17 +14,27 @@ pipeline {
         HELM_CHART_NAME = 'business-service'
         NAMESPACE= 'business-service'
         DOCKERFILE_DIR = './microservices/business/'
-        RELEASE_NAME=business-service
+        CANARY_RELEASE_NAME="business-service-canary"
+        CANARY_HELM_PATH="./canary-helm-charts/canary"
+        HOST="business-service.business-service.svc.cluster.local"
+        RELEASE_NAME="business-service"
+
     }
 
     stages {
         stage('Clean Workspace') {
+            when {
+                expression { !params.ROLLBACK }
+            }
             steps {
                 cleanWs()
             }
         }
 
         stage('Clone Repo') {
+            when {
+                expression { !params.ROLLBACK }
+            }
             steps {
                 checkout scm: [
                     $class: 'GitSCM',
@@ -37,28 +50,78 @@ pipeline {
             }
         }
         stage('Build and Push Docker Image') {
+            when {
+                expression { !params.ROLLBACK }
+            }
             steps {
                 script {
                     echo 'Building and pushing the Docker image to Docker Hub'
                     dir(DOCKERFILE_DIR) {
-                        dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
-                        
+                        def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${STABLE_DOCKER_IMAGE_TAG}")
+
                         docker.withRegistry('', REGISTRY_CREDENTIAL) {
                             dockerImage.push()
+                        }
+
+                        if (params.canaryEnabled && params.CANARY_DOCKER_IMAGE_TAG?.trim()) {
+                            echo 'Building and pushing the Canary Docker image'
+                            def canaryDockerImage = docker.build("${DOCKER_IMAGE_NAME}:${params.CANARY_DOCKER_IMAGE_TAG}")
+                            canaryDockerImage.push()
                         }
                     }
                 }
             }
         }
-
-        stage('Install Helm Chart') {
+        stage('Install Canary Helm Chart') {
+            when {
+                expression { !params.ROLLBACK && params.canaryEnabled && params.CANARY_DOCKER_IMAGE_TAG?.trim() }
+            }
             steps {
                 script {
-                    sh "helm upgrade --install ${RELEASE_NAME}  ./helm-charts/${HELM_CHART_NAME} \
+                    echo 'Installing Canary Helm chart'
+                    sh "helm upgrade --install ${CANARY_RELEASE_NAME} ${CANARY_HELM_PATH} \
                         --namespace ${NAMESPACE} \
-                        --set image.tag=${params.DOCKER_IMAGE_TAG}"
+                        --set defaults.host=${HOST}\
+                        --set defaults.namespace=${NAMESPACE}"
                 }
             }
+        }
+
+        stage('Install Business-Service Helm Chart') {
+            when {
+                expression { !params.ROLLBACK }
+            }
+            steps {
+                script {
+                    def helmCommand = "helm upgrade --install ${RELEASE_NAME} ./helm-charts/${HELM_CHART_NAME} \
+                                        --namespace ${NAMESPACE} \
+                                        --set stable.image.tag=${params.STABLE_DOCKER_IMAGE_TAG}"
+
+                    if (params.canaryEnabled && params.CANARY_DOCKER_IMAGE_TAG?.trim()) {
+                        helmCommand += " \
+                            --set canary.image.tag=${params.CANARY_DOCKER_IMAGE_TAG} \
+                            --set canary.replicaCount=1"
+                    }
+
+                    echo "Executing Helm command: ${helmCommand}"
+                    sh helmCommand
+                }
+            }
+        }
+        stage('Rollback Release') {
+            when {
+                expression { params.ROLLBACK }
+            }
+            steps {
+                script {
+                    echo 'Rolling back to previous Helm release revision...'
+                    sh '''
+                        PREVIOUS_REVISION=$(helm history ${RELEASE_NAME} -n ${NAMESPACE} | tail -n 2 | head -n 1 | awk '{print $1}')
+                        helm rollback ${RELEASE_NAME} $PREVIOUS_REVISION -n ${NAMESPACE}
+                    '''
+                }
+            }
+
         }
     }
 
