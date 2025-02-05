@@ -1,0 +1,184 @@
+Listing Kubernetes resources in each namespace...
+==============================================
+Namespace: emailservice
+----------------------------------------------
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/emailservice-5d897cb985-56lkd   2/2     Running   0          4h45m
+
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/emailservice   ClusterIP   10.100.249.129   <none>        5000/TCP   4h45m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/emailservice   1/1     1            1           4h45m
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/emailservice-5d897cb985   1         1         1       4h45m
+==============================================
+Namespace: checkoutservice
+----------------------------------------------
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/checkoutservice-7df68489f8-zqnq7   2/2     Running   0          4h48m
+
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/checkoutservice   ClusterIP   10.100.62.166   <none>        5050/TCP   4h48m
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/checkoutservice   1/1     1            1           4h48m
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/checkoutservice-7df68489f8   1         1         1       4h48m
+==============================================
+Namespace: recommendationservice
+----------------------------------------------
+NAME                                         READY   STATUS    RESTARTS   AGE
+pod/recommendationservice-857fc64bff-xwsm7   2/2     Running   0          4h43m
+
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/recommendationservice   ClusterIP   10.100.137.149   <none>        8080/TCP   4h43m
+
+NAME                                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/recommendationservice   1/1     1            1           4h43m
+
+NAME                                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/recommendationservice-857fc64bff   1         1         1       4h43m
+==============================================
+Namespace: frontend
+----------------------------------------------
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/frontend-6bdc85f489-28cks         2/2     Running   0          114m
+pod/frontend-canary-64485bdf7-cb624   2/2     Running   0          114m
+
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP                                                              PORT(S)        AGE
+service/frontend            ClusterIP      10.100.30.90    <none>                                                                   80/TCP         5h40m
+service/frontend-external   LoadBalancer   10.100.193.76   a081390e4cd094c3dbd1c597bd0264e7-405459247.us-east-1.elb.amazonaws.com   80:30405/TCP   5h40m
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/frontend          1/1     1            1           5h37m
+deployment.apps/frontend-canary   1/1     1            1           5h40m
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/frontend-6bdc85f489          1         1         1       114m
+replicaset.apps/frontend-76f974c7cd          0         0         0       5h37m
+replicaset.apps/frontend-9d87fd87d           0         0         0       4h23m
+replicaset.apps/frontend-canary-64485bdf7    1         1         1       5h40m
+replicaset.apps/frontend-canary-7ff6cc558b   0         0         0       4h10m
+==============================================
+Namespace: paymentservice
+----------------------------------------------
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/paymentservice-55fb9d4fdf-b2flq   2/2     Running   0          4h44m
+
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+service/paymentservice   ClusterIP   10.100.130.111   <none>        50051/TCP   4h44m
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/paymentservice   1/1     1            1           4h44m
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/paymentservice-55fb9d4fdf   1         1         1       4h44m
+==============================================
+Namespace: productcatalogservice
+----------------------------------------------
+NAME                                         READY   STATUS    RESTARTS   AGE
+pod/productcatalogservice-7d44bc85c5-zfbdq   2/2     Running   0          4h43m
+
+NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/productcatalogservice   ClusterIP   10.100.42.196   <none>        3550/TCP   4h43m
+
+NAME                                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/productcatalogservice   1/1     1            1           4h43m
+
+NAME                                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/productcatalogservice-7d44bc85c5   1         1         1       4h43m
+==============================================
+Namespace: cartservice
+----------------------------------------------
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/cartservice-668c84d844-f2qsj   2/2     Running   0          4h56m
+pod/redis-cart-7ff8f4d6ff-xm88h    2/2     Running   0          5h1m
+
+NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/cartservice   ClusterIP   10.100.125.88    <none>        7070/TCP   5h1m
+service/redis-cart    ClusterIP   10.100.253.121   <none>        6379/TCP   5h1m
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/cartservice   1/1     1            1           5h1m
+deployment.apps/redis-cart    1/1     1            1           5h1m
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/cartservice-668c84d844   1         1         1       4h56m
+replicaset.apps/cartservice-79fc67b6c4   0         0         0       5h1m
+replicaset.apps/redis-cart-7ff8f4d6ff    1         1         1       5h1m
+==============================================
+Namespace: loadgenerator
+----------------------------------------------
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/loadgenerator-7cbbc9bf78-wntkw   2/2     Running   0          4h40m
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/loadgenerator   1/1     1            1           4h45m
+
+NAME                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/loadgenerator-5f9c975788   0         0         0       4h45m
+replicaset.apps/loadgenerator-7cbbc9bf78   1         1         1       4h40m
+==============================================
+Namespace: currencyservice
+----------------------------------------------
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/currencyservice-7f848f769f-t6mzp   2/2     Running   0          4h45m
+
+NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/currencyservice   ClusterIP   10.100.143.240   <none>        7000/TCP   4h45m
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/currencyservice   1/1     1            1           4h45m
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/currencyservice-7f848f769f   1         1         1       4h45m
+==============================================
+Namespace: shippingservice
+----------------------------------------------
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/shippingservice-845567c69c-tk9xp   2/2     Running   0          4h42m
+
+NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
+service/shippingservice   ClusterIP   10.100.72.60   <none>        50051/TCP   4h42m
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/shippingservice   1/1     1            1           4h42m
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/shippingservice-845567c69c   1         1         1       4h42m
+==============================================
+Namespace: adservice
+----------------------------------------------
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/adservice-5fb8b89fb9-vp7mh   2/2     Running   0          5h5m
+
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/adservice   ClusterIP   10.100.217.39   <none>        9555/TCP   5h5m
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/adservice   1/1     1            1           5h5m
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/adservice-5fb8b89fb9   1         1         1       5h5m
+==============================================
+Namespace: business-service
+----------------------------------------------
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/business-service-7f7466fd55-5pzc4   2/2     Running   0          4h24m
+
+NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)        AGE
+service/business-service   LoadBalancer   10.100.161.125   a15af184b903e48b3b18bdb8420b7095-1437972145.us-east-1.elb.amazonaws.com   80:31704/TCP   6h53m
+
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/business-service          1/1     1            1           6h53m
+deployment.apps/business-service-canary   0/0     0            0           6h53m
+
+NAME                                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/business-service-65d49f44cb          0         0         0       6h53m
+replicaset.apps/business-service-7f7466fd55          1         1         1       4h24m
+replicaset.apps/business-service-canary-558d78687    0         0         0       4h17m
+replicaset.apps/business-service-canary-594f76c9c4   0         0         0       6h39m
+replicaset.apps/business-service-canary-7b959db888   0         0         0       6h53m
