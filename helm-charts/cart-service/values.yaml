@@ -7,7 +7,7 @@ cartservice:
   replicaCount: 1
   image:
     repository: preranamauryaa/microservice-cartservice
-    tag: latest
+    tag: v1
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
