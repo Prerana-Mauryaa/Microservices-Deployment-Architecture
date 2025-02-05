@@ -5,8 +5,7 @@ defaults:
 
 virtualService:
   name: "virtualservice" 
-  gateways:
-  - my-gateway
+  gateways: my-gateway
 destinationRule:
   name: "destinationrule" 
 trafficWeights:
