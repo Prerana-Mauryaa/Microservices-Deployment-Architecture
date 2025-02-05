@@ -34,7 +34,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: "{{ .Values.canary.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.canary.image.repository }}:{{ .Values.canary.image.tag }}"
           imagePullPolicy: {{ .Values.canary.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.ports.targetPort }}
