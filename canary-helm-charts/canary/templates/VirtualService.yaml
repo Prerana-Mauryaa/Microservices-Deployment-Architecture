@@ -6,6 +6,8 @@ metadata:
 spec:
   hosts:
   - {{ .Values.defaults.host }}
+  gateways:
+  - {{ .Values.virtualService.gateways }}
   http:
   - route:
     - destination:
