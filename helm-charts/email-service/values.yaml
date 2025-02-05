@@ -6,7 +6,7 @@ namespace: emailservice
 replicaCount: 1
 image:
   repository: preranamauryaa/microservice-emailservice
-  tag: newversion
+  tag: v1
   pullPolicy: IfNotPresent
 
 service:
