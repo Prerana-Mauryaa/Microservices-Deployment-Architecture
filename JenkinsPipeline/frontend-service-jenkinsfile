@@ -89,7 +89,7 @@ pipeline {
             }
         }
 
-        stage('Install Business-Service Helm Chart') {
+        stage('Install Frontend-Service Helm Chart') {
             when {
                 expression { !params.ROLLBACK }
             }

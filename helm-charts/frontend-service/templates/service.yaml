@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.name }}
-  namespace: {{ .Values.namespace | default frontend }}
+  namespace: {{ .Values.namespace | default "frontend" }}
   labels:
     {{- include "frontend.labels" . | nindent 4 }}
 spec:
