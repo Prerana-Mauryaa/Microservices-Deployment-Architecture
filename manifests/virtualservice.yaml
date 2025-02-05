@@ -13,7 +13,7 @@ spec:
         prefix: /business
     route:
     - destination:
-        host: business-service.default.svc.cluster.local
+        host: business-service.business-service.svc.cluster.local
         port:
           number: 80
   - match:
@@ -21,6 +21,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: frontend-external.default.svc.cluster.local
+        host: frontend-external.frontend.svc.cluster.local
         port:
           number: 80
