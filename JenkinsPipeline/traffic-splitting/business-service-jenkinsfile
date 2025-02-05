@@ -13,6 +13,33 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            when {
+                expression { !params.ROLLBACK }
+            }
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Clone Repo') {
+            when {
+                expression { !params.ROLLBACK }
+            }
+            steps {
+                checkout scm: [
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']], 
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [
+                        [$class: 'CleanBeforeCheckout']
+                    ],
+                    userRemoteConfigs: [
+                        [credentialsId: '285ef469-829e-4e3e-9a38-d5b530d9b251', url: 'git@github.com:Prerana-Mauryaa/microservices-project.git']
+                    ]
+                ]
+            }
+        }
         stage('Traffic Splitting') {
             steps {
                 script {
@@ -35,6 +62,9 @@ pipeline {
     }
 
     post {
+        always {
+            cleanWs()
+        }
         success {
             echo "Deployment successful with stable traffic weight: ${params.STABLE_TRAFFIC_WEIGHT} and canary traffic weight: ${params.CANARY_TRAFFIC_WEIGHT}."
         }
