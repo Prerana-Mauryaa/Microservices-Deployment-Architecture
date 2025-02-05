@@ -8,14 +8,14 @@ restartPolicy: Always
 # Image details
 image:
   repository: preranamauryaa/microservice-loadgeneratorservice
-  tag: latest
+  tag: v1
   pullPolicy: IfNotPresent
 
 # Init container settings
 initContainer:
   image:
     repository: busybox
-    tag: v1
+    tag: latest
     pullPolicy: IfNotPresent
   maxRetries: 12
   retryInterval: 10
