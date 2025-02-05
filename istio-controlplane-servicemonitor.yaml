@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-oper-istio-controlplane
+  labels:
+    release: monitoring
+spec:
+  jobLabel: istio
+  selector:
+    matchLabels:
+      app: istiod
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: http-monitoring
+      interval: 15s
+    - port: http-policy-monitoring
+      interval: 15s
