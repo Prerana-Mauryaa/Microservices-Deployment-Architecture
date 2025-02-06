@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: prometheus-oper-istio-controlplane
   labels:
-    release: monitoring
+    release: monitoring # must be the same as the release label of the Prometheus instance
 spec:
   jobLabel: istio
   selector:

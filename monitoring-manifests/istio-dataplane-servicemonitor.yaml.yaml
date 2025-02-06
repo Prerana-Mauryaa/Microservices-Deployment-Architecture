@@ -4,7 +4,7 @@ metadata:
   name: prometheus-oper-istio-dataplane
   labels:
     monitoring: istio-dataplane
-    release: monitoring 
+    release: monitoring  # must be the same as the release label of the Prometheus instance
 spec:
   selector:
     matchExpressions:
