@@ -53,3 +53,5 @@ I have added a new microservice named **Business** in python flask, which allows
 
 
 <img src="https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/microservice.drawio%20(2).svg" width="200px" />
+
+![Alt text]([path-to-your-image.svg](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/microservice.drawio%20(2).svg))
