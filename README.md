@@ -2,6 +2,10 @@
 # Microservices-Deployment-Architecture
 
 This project involved designing, deploying, and managing a highly scalable microservices-based application architecture on Amazon Elastic Kubernetes Service (EKS). The architecture consists of a total of 11 microservices, including one custom-built Python Flask microservice connected via gRPC to an existing microservice from a Google-provided repository. The project focused on implementing secure communication, deployment automation, and observability features to create a production-ready system.
+## Project Architecture
+
+![Project Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/Project-overview.png)
+
 ## Implementation 
 #### Microservice  Analysis 
 * I analyzed the communication patterns between the microservices to understand their interaction and dependencies.
@@ -49,9 +53,5 @@ I have added a new microservice named **Business** in python flask, which allows
 | AdService                | Java            | Displays context-based text ads.                                                |
 | LoadGenerator            | Python/Locust   | Simulates user shopping behaviors for performance testing.                      |
 
-![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/Untitled%20design%20(65).png)
+![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/Microservice_Arc.png)
 
-
-<img src="https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/microservice.drawio%20(2).svg" width="200px" />
-
-![Alt text]([path-to-your-image.svg](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/microservice.drawio%20(2).svg))
