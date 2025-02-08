@@ -50,3 +50,6 @@ I have added a new microservice named **Business** in python flask, which allows
 | LoadGenerator            | Python/Locust   | Simulates user shopping behaviors for performance testing.                      |
 
 ![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/Untitled%20design%20(65).png)
+
+
+<img src="https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/microservice.drawio%20(2).svg" width="200px" />
