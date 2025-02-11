@@ -228,12 +228,12 @@ I have created a shell script located at `setup-scripts/istio-setup.sh` that aut
 - `ROLLBACK`: Boolean flag to trigger rollback to the previous Helm release revision (default: `false`).  
 
 #### **Stages**  
-*  **Clean Workspace:** Clears Jenkins workspace for fresh deployments (skipped during rollback).  
-*  **Clone Repo:** Fetches the latest code from the GitHub repository (skipped during rollback).  
-* **Build and Push Docker Image:** Builds and pushes stable Docker images; optionally builds Canary images if enabled.  
-* **Install Canary Helm Chart:** Installs Canary Helm chart with custom configurations if enabled.  
-* **Install Business-Service Helm Chart:** Deploys or upgrades the stable service and canary configurations if applicable.  
-* **Rollback Release:** Rolls back to the previous Helm revision when rollback is triggered.  
+*  **`Clean Workspace`:** Clears Jenkins workspace for fresh deployments (skipped during rollback).  
+*  **`Clone Repo`:** Fetches the latest code from the GitHub repository (skipped during rollback).  
+* **`Build and Push Docker Image`:** Builds and pushes stable Docker images; optionally builds Canary images if enabled.  
+* **`Install Canary Helm Chart`:** Installs Canary Helm chart with custom configurations if enabled.  
+* **`Install Business-Service Helm Chart`:** Deploys or upgrades the stable service and canary configurations if applicable.  
+* **`Rollback Release`:** Rolls back to the previous Helm revision when rollback is triggered.  
 
 ![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/canary_deployment.png)
 
@@ -247,9 +247,9 @@ This pipeline ensures flexibility for controlled Canary deployments and rollback
 - `CANARY_TRAFFIC_WEIGHT`: Percentage for canary version traffic (default: `80%`).  
 
 #### **Stages**  
-* **Clean Workspace:** Ensures a clean environment by clearing the workspace.  
-* **Clone Repo:** Fetches the required configurations from the repository.  
-* **Traffic Splitting:** Deploys and configures traffic weights for stable and canary releases.  
+* `**Clean Workspace`:** Ensures a clean environment by clearing the workspace.  
+* **`Clone Repo`:** Fetches the required configurations from the repository.  
+* **`Traffic Splitting`:** Deploys and configures traffic weights for stable and canary releases.  
 
 ![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/traffic_splitting.png)
 
@@ -259,10 +259,10 @@ This pipeline ensures flexibility for controlled Canary deployments and rollback
 - `DOCKER_IMAGE_TAG`: Tag for the Docker image to be built and deployed (default: `latest`).  
 
 #### **Stages**  
-* **Clean Workspace:** Clears Jenkins workspace for a fresh build.  
-* **Clone Repo:** Clones the latest code from the GitHub repository.  
-*  **Build and Push Docker Image:** Builds and pushes the Docker image to Docker Hub.  
-* **Install Helm Chart:** Deploys or upgrades Helm charts with the provided image tag.  
+* **`Clean Workspace`:** Clears Jenkins workspace for a fresh build.  
+* **`Clone Repo`:** Clones the latest code from the GitHub repository.  
+*  **`Build and Push Docker Image`:** Builds and pushes the Docker image to Docker Hub.  
+* **`Install Helm Chart`:** Deploys or upgrades Helm charts with the provided image tag.  
 
 ![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/diagrams/normal_deployment.png)
 
@@ -336,8 +336,6 @@ I have created and configured three dashboards in Grafana for comprehensive moni
 
 Displays CPU, memory, and disk utilization for individual nodes.
 Helps identify resource bottlenecks at the node level.
-
-![Microservice Architecture](https://github.com/Prerana-Mauryaa/Microservices-Deployment-Architecture/blob/master/images/screenshots/business.png)
 
 * **Kubernetes Cluster Monitoring Dashboard**:
 
