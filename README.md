@@ -247,7 +247,7 @@ This pipeline ensures flexibility for controlled Canary deployments and rollback
 - `CANARY_TRAFFIC_WEIGHT`: Percentage for canary version traffic (default: `80%`).  
 
 #### **Stages**  
-* `**Clean Workspace`:** Ensures a clean environment by clearing the workspace.  
+* **`Clean Workspace`:** Ensures a clean environment by clearing the workspace.  
 * **`Clone Repo`:** Fetches the required configurations from the repository.  
 * **`Traffic Splitting`:** Deploys and configures traffic weights for stable and canary releases.  
 
